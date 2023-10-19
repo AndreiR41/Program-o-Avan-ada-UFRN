@@ -1,0 +1,5 @@
+﻿  labirinto.cpp
+C:\Users\andre\Desktop\Meus Códigos\labirinto_main\labirinto.cpp(314,13): warning C4244: 'argumento': conversão de 'time_t' para 'unsigned int', possível perda de dados
+C:\Users\andre\Desktop\Meus Códigos\labirinto_main\labirinto.cpp(492,33): warning C4267: '=': conversão de 'size_t' para 'int', possível perda de dados
+C:\Users\andre\Desktop\Meus Códigos\labirinto_main\labirinto.cpp(493,33): warning C4267: '=': conversão de 'size_t' para 'int', possível perda de dados
+  labirinto_main.vcxproj -> C:\Users\andre\Desktop\Meus Códigos\labirinto_main\x64\Debug\labirinto_main.exe

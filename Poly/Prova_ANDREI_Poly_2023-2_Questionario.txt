@@ -1,0 +1,51 @@
+PROVA - PROGRAMAÇÃO AVANÇADA - 2023.2
+1ª UNIDADE
+
+
+Alun@: Andrei Raí Nunes de Araújo
+
+
+A avaliação consiste de 40 (quarenta) questões, cujos enunciados encontram-se no arquivo com as questões da prova.
+
+Assinale se o resultado da execução do seu programa foi 100% correto, comparado com a resposta esperada (o gabarito encontra-se no arquivo com as questões da prova). Se foi incorreto, explique resumidamente o que deu errado.
+
+Questão 01:  (X) 100% correto   ( ) Incorreto: _____
+Questão 02:  (X ) 100% correto   ( ) Incorreto: _____
+Questão 03:  (X) 100% correto   ( ) Incorreto: _____
+Questão 04:  (X) 100% correto   ( ) Incorreto: _____
+Questão 05:  (X) 100% correto   ( ) Incorreto: _____
+Questão 06:  (X) 100% correto   ( ) Incorreto: _____
+Questão 07:  (X) 100% correto   ( ) Incorreto: _____
+Questão 08:  (X) 100% correto   ( ) Incorreto: _____
+Questão 09:  (X) 100% correto   ( ) Incorreto: _____
+Questão 10:  (X) 100% correto   ( ) Incorreto: _____
+Questão 11:  (X) 100% correto   ( ) Incorreto: _____
+Questão 12:  (X) 100% correto   ( ) Incorreto: _____
+Questão 13:  (X) 100% correto   ( ) Incorreto: _____
+Questão 14:  (X) 100% correto   ( ) Incorreto: _____
+Questão 15:  (X) 100% correto   ( ) Incorreto: _____
+Questão 16:  (X) 100% correto   ( ) Incorreto: _____
+Questão 17:  (X) 100% correto   ( ) Incorreto: _____
+Questão 18:  (X) 100% correto   ( ) Incorreto: _____
+Questão 19:  (X) 100% correto   ( ) Incorreto: _____
+Questão 20:  (X) 100% correto   ( ) Incorreto: _____
+Questão 21:  (X) 100% correto   ( ) Incorreto: _____
+Questão 22:  (X) 100% correto   ( ) Incorreto: _____
+Questão 23:  (X) 100% correto   ( ) Incorreto: _____
+Questão 24:  (X) 100% correto   ( ) Incorreto: _____
+Questão 25:  (X) 100% correto   ( ) Incorreto: _____
+Questão 26:  (X) 100% correto   ( ) Incorreto: _____
+Questão 27:  (X) 100% correto   ( ) Incorreto: _____
+Questão 28:  (X) 100% correto   ( ) Incorreto: _____
+Questão 29:  (X) 100% correto   ( ) Incorreto: _____
+Questão 30:  (X) 100% correto   ( ) Incorreto: _____
+Questão 31:  (X) 100% correto   ( ) Incorreto: _____
+Questão 32:  (X) 100% correto   ( ) Incorreto: _____
+Questão 33:  (X) 100% correto   ( ) Incorreto: _____
+Questão 34:  (X) 100% correto   ( ) Incorreto: _____
+Questão 35:  (X) 100% correto   ( ) Incorreto: _____
+Questão 36:  (X) 100% correto   ( ) Incorreto: _____
+Questão 37:  (X) 100% correto   ( ) Incorreto: _____
+Questão 38:  (X) 100% correto   ( ) Incorreto: _____
+Questão 39:  (X) 100% correto   ( ) Incorreto: _____
+Questão 40:  (X) 100% correto   ( ) Incorreto: _____
