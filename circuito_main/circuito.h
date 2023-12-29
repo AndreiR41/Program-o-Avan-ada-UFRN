@@ -75,6 +75,8 @@ public:
 	// de memoria para as quais cada ponteiro desse vetor aponta.
 	void clear();
 
+	
+
 	// Operador de atribuicao por copia
 	// Limpa (clear) e depois atribui (faz copia) Nin e os vetores id_out e out_circ
 	// O vetor ports terah a mesma dimensao do equivalente no Circuit C

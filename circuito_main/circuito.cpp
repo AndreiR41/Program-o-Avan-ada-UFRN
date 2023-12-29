@@ -21,11 +21,11 @@ bool validType(std::string& Tipo)
             Tipo != "XO" && Tipo != "NX") throw 2;
     }
     catch (int erro)
-    {
+    {/*
         // Mensagem de erro para debug. Remova na versao final,
         // especialmente se estiver utilizando interface com programacao visual
         std::cerr << "ERRO validType - string (" << Tipo
-            << ") invalida - erro tipo " << erro << std::endl;
+            << ") invalida - erro tipo " << erro << std::endl;*/
 
         return false;
     }
@@ -68,13 +68,36 @@ Circuito::Circuito() :Nin(0), id_out(), out_circ(), ports() {}
 // Construtor por copia
 // Nin e os vetores id_out e out_circ serao copias dos equivalentes no Circuito C
 // O vetor ports terah a mesma dimensao do equivalente no Circuito C
-// Serah necessario utilizar a funcao virtual clone para criar copias das portas
-falta_fazer();
+// Serah necessario utilizar a funcao virtual clone para criar copias das portas                                      COMECAH DAQUI                 TALVEZ CERTO
+// Construtor por cópia
+Circuito::Circuito(const Circuito& C)  {                                                                                             
+    // Copia de Nin e dos vetores id_out e out_circ
+
+   this->Nin = C.Nin;
+   this->id_out = C.id_out;       
+   this->out_circ = C.out_circ;
+
+
+    // Copia dos objetos das portas (usando clone())
+    for (int i = 0; i < this->Nin; ++i) {
+        this->ports.push_back(C.ports[i]->clone());
+    }
+}
+
+
 
 // Construtor por movimento
-// Nin e os vetores id_out, out_circ e ports assumirao o conteudo dos equivalentes
-// no Circuit temporario C, que serah zerado
-falta_fazer();
+// Nin e os vetores id_out, out_circ e ports assumirao o conteudo dos equivalentes no Circuit temporario C, que serah zerado                            
+Circuito::Circuito(Circuito&& C) : Nin(C.Nin), id_out(std::move(C.id_out)), out_circ(std::move(C.out_circ)), ports(std::move(C.ports)) {
+    // Troca os conteúdos
+    std::swap(this->id_out, C.id_out);
+    std::swap(this->out_circ, C.out_circ);
+    std::swap(this->ports, C.ports);
+    
+    // Resetando o circuito temporário
+    C.clear();
+}
+
 
 // Destrutor: chama a funcao clear()
 Circuito::~Circuito()
@@ -86,26 +109,71 @@ Circuito::~Circuito()
 // utiliza o metodo STL clear para limpar os vetores id_out, out_circ e ports
 // ATENCAO: antes de dar um clear no vetor ports, tem que liberar (delete) as areas
 // de memoria para as quais cada ponteiro desse vetor aponta.
-void Circuito::clear()
+void Circuito::clear()                                                      //MUDA
 {
-    falta_fazer();
+    // Define Nin como 0
+    Nin = 0;
+
+    // Limpa os vetores id_out e out_circ
+    id_out.clear();
+    out_circ.clear();
+
+    // Libera a memória apontada pelos ponteiros em ports
+    for (int i= 0; i < getNumPorts();i++) {
+        delete ports[i];
+    }
+
+    // Limpa o vetor ports
+    ports.clear();
 }
 
 // Operador de atribuicao por copia
 // Limpa (clear) e depois atribui (faz copia) Nin e os vetores id_out e out_circ
-// O vetor ports terah a mesma dimensao do equivalente no Circuit C
+// O vetor ports terah a mesma dimensao do equivalente no Circuit C                       ENTAO N PRECISA DE RESIZE
 // Serah necessario utilizar a funcao virtual clone para criar copias das portas
 Circuito& Circuito::operator=(const Circuito& C)
 {
-    falta_fazer();
+    // Verifica se não está se autoatribuindo (C == *this)
+    if (this != &C) {
+
+
+        // Limpa o conteúdo atual
+        clear();
+
+        // Copia os membros de C
+        Nin = C.Nin;
+        id_out = C.id_out;
+        out_circ = C.out_circ;
+
+        // Copia as portas usando a função virtual clone()
+        for (size_t i = 0; i < C.ports.size(); ++i) {
+            ports.push_back(C.ports[i]->clone());
+        }
+
+        return *this;
+    }
 }
 
 // Operador de atribuicao por movimento
 // Limpa (clear) e depois move/troca (swap) Nin e os vetores id_out, out_circ e ports
-Circuito& Circuito::operator=(Circuito&& C)
-{
-    falta_fazer();
+Circuito& Circuito::operator=(Circuito&& C)  {
+    // Verifica se não está se autoatribuindo (C == *this)
+    if (this == &C) {
+        return *this;
+    }
+
+    // Limpa o conteúdo atual
+    clear();
+
+    // Usa std::swap para trocar os membros de *this e C
+    std::swap(Nin, C.Nin);
+    std::swap(id_out, C.id_out);
+    std::swap(out_circ, C.out_circ);
+    std::swap(ports, C.ports);
+
+    return *this;
 }
+
 
 // Redimensiona o circuito para passar a ter NI entradas, NO saidas e NP ports
 // Inicialmente checa os parametros. Caso sejam validos:
@@ -114,22 +182,33 @@ Circuito& Circuito::operator=(Circuito&& C)
 // - os vetores tem as dimensoes alteradas e sao inicializados (usando resize)
 //   com valores iniciais neutros ou invalidos: id_out com valor 0,
 //   out_circ com valor UNDEF e ports com valor nullptr
-void Circuito::resize(int NI, int NO, int NP)
-{
-    if (NI <= 0 || NO <= 0 || NP <= 0)
-    {
-        // Mensagem de erro para debug. Remova na versao final,
-        // especialmente se estiver utilizando interface com programacao visual
+void Circuito::resize(int NI, int NO, int NP) {
+    // Checa se os parâmetros são válidos
+    if (NI <= 0 || NO <= 0 || NP <= 0) {
+        /*// Mensagem de erro para debug. Remova na versão final,
+        // especialmente se estiver utilizando interface com programação visual
         std::cerr << "ERRO Circuito::resize - NI=" << NI
             << ",NP=" << NP
-            << ",NO=" << NO << std::endl;
+            << ",NO=" << NO << std::endl;*/
         return;
     }
-    falta_fazer();
+
+    // Limpa o conteúdo anterior
+    clear();
+
+    // Altera Nin
+    Nin = NI;
+
+    // Redimensiona os vetores e inicializa com valores iniciais
+    id_out.resize(NO, 0);  // Inicializa com 0
+    out_circ.resize(NO, bool3S::UNDEF);  // Inicializa com UNDEF
+    ports.resize(NP, nullptr);  // Inicializa com nullptr
 }
 
+
+
 /// ***********************
-/// Funcoes de testagem
+/// FUNCOES DE TESTE
 /// ***********************
 
 // Retorna true se IdInput eh uma id de entrada do circuito valida (entre -1 e -NInput)
@@ -180,10 +259,10 @@ bool Circuito::validPort(int IdPort) const
     }
     catch (int erro)
     {
-        // Mensagem de erro para debug. Remova na versao final,
+        /*// Mensagem de erro para debug. Remova na versao final,
         // especialmente se estiver utilizando interface com programacao visual
         std::cerr << "ERRO Circuito::validPort - porta (Id=" << IdPort
-            << ") invalida - erro tipo " << erro << std::endl;
+            << ") invalida - erro tipo " << erro << std::endl;*/
 
         return false;
     }
@@ -213,9 +292,9 @@ bool Circuito::valid() const
     }
     catch (int erro)
     {
-        // Mensagem de erro para debug. Remova na versao final,
+        /*/ Mensagem de erro para debug. Remova na versao final,
         // especialmente se estiver utilizando interface com programacao visual
-        std::cerr << "ERRO Circuito::valid - tipo " << erro << std::endl;
+        std::cerr << "ERRO Circuito::valid - tipo " << erro << std::endl;*/
 
         return false;
     }
@@ -223,7 +302,7 @@ bool Circuito::valid() const
 }
 
 /// ***********************
-/// Funcoes de consulta
+/// FUNCOES DE CONSULTA
 /// ***********************
 
 // Caracteristicas do circuito
@@ -307,7 +386,7 @@ int Circuito::getId_inPort(int IdPort, int I) const
 }
 
 /// ***********************
-/// Funcoes de modificacao
+/// FUNCOES DE MODIFICACAO
 /// ***********************
 
 // Caracteristicas das saidas
@@ -323,7 +402,7 @@ void Circuito::setIdOutput(int IdOut, int IdOrig)
     }
 }
 
-// Caracteristicas das ports
+// CARACTERISTICAS DAS PORTAS
 
 // A porta cuja id eh IdPort passa a ser do tipo Tipo (NT, AN, etc.), com NIn entradas
 // Depois de varios testes:
@@ -341,16 +420,25 @@ void Circuito::setPort(int IdPort, std::string Tipo, int NIn)
     if (!validType(Tipo)) return;
     if ((Tipo == "NT" && NIn == 1) || (Tipo != "NT" && NIn >= 2))
     {
-        falta_fazer();
+        // Limpa a antiga área de memória
+        if (definedPort(IdPort)) {
+            delete ports.at(IdPort - 1);
+        }
+
+        // Cria a nova porta
+        ports.at(IdPort - 1) = allocPort(Tipo);
+
+        // Fixa o número de entradas
+        ports.at(IdPort - 1)->setNumInputs(NIn);
     }
     else
-    {
+    {/*
         // Mensagem de erro para debug. Remova na versao final,
         // especialmente se estiver utilizando interface com programacao visual
         std::cerr << "ERRO Circuito::setPort - tipo ("
             << Tipo << ") e numero de entradas ("
             << NIn << ") incompativeis para porta Id="
-            << IdPort << std::endl;
+            << IdPort << std::endl;*/
     }
 }
 
@@ -416,18 +504,40 @@ void Circuito::digitar(void)
         {
             std::cout << "  Tipo da porta [NT,AN,NA,OR,NO,XO,NX]: ";
             std::cin >> tipo;
-        } while (!validType(tipo));
+        } while (!validType(tipo));                                                 //A partir daqui   VERIFICAR
 
-        falta_fazer();
+        // Alocando a porta
+        //Port* porta = allocPort(tipo);
+        
+        // Verificando a porta
+        if (ports.at(i) != nullptr) //ou !validPort(porta)
+        {
+            delete ports.at(i);
+        }
+        else
+        {
+            // Adicionando a porta ao circuito
+            ports.at(i) = allocPort(tipo);
+        }
 
+        do {
+            ports.at(i)->digitar();
+        } while (!validPort(i + 1));
     }
+
+    
 
     std::cout << "SAIDAS:\n";
     for (i = 0; i < getNumOutputs(); ++i)
     {
-
-        falta_fazer();
-
+        int IdOut;
+        do
+        {
+            std::cout << "Digite o Id da saida: " << i + 1 << ":";
+            std::cin >> IdOut;
+        } while (!validIdOrig(IdOut));
+        id_out.at(i) = IdOut;
+ 
     }
 }
 
@@ -453,7 +563,7 @@ bool Circuito::ler(const std::string& arq)
         int NI, NO, NP;
         char c;
         std::string tipo;
-        int id, i;
+        int id, i, idTemp;
 
         if (!myfile.is_open()) throw 1;
         // Lendo as dimensoes do circuito
@@ -472,26 +582,40 @@ bool Circuito::ler(const std::string& arq)
             myfile >> id >> c >> tipo;
             if (!myfile.good() || id != i + 1 || c != ')' || !validType(tipo)) throw 4;
 
-            falta_fazer(); // em caso de erro, throw 5;
+            // em caso de erro, throw 5;                                                                  
+            ports.at(i) = allocPort(tipo);
+            if (!ports.at(i)->ler(myfile)) {
+                throw 5;  // Em caso de erro na leitura
+            }
 
+            if (!validPort(i + 1)) {
+                throw 5;  // Em caso de porta inválida
+            }
+                
         }
 
         // Lendo as id de origem das saidas do circuito
         myfile >> pS;
         if (!myfile.good() || pS != "SAIDAS") throw 6;
         for (i = 0; i < getNumOutputs(); ++i)
-        {
-
-            falta_fazer(); // em caso de erro, throw 7;
-
+        {// em caso de erro, throw 7;                                                      
+            // Lendo e validando
+            idTemp = 0;
+            myfile >> id >> c >> idTemp;
+            if (myfile.good() && id == i + 1 && c == ')' && validIdOrig(idTemp)) {
+                setIdOutput(i + 1, idTemp);
+            }
+            else {
+                throw 7;
+            }
         }
     }
     catch (int erro)
     {
-        // Mensagem de erro para debug. Remova na versao final,
+        /*/ Mensagem de erro para debug. Remova na versao final,                                                      
         // especialmente se estiver utilizando interface com programacao visual
         std::cerr << "ERRO Circuito::ler - arquivo (" << arq
-            << ") invalido - erro tipo " << erro << std::endl;
+            << ") invalido - erro tipo " << erro << std::endl;*/
 
         if (myfile.is_open()) myfile.close();
         clear();
@@ -501,6 +625,8 @@ bool Circuito::ler(const std::string& arq)
     return true;
 }
 
+
+
 // Saida dos dados de um circuito (em tela ou arquivo, a mesma funcao serve para os dois)
 // Imprime os cabecalhos e os dados do circuito, caso o circuito seja valido
 // Deve utilizar os metodos de impressao da classe Port
@@ -509,7 +635,20 @@ std::ostream& Circuito::imprimir(std::ostream& O) const
 {
     if (!valid()) return O;
 
-    falta_fazer();
+    O << "CIRCUITO " << getNumInputs() << " " << getNumOutputs() << " " << getNumPorts() << "\n";
+
+    O << "PORTAS\n";
+    for (int i = 0; i < getNumPorts(); ++i) {
+        O << i + 1 << ") ";
+        ports.at(i)->imprimir(O);  // Chama a função imprimir da classe Port
+        O << std::endl;
+    }
+    
+    O << "SAIDAS\n";
+    size_t i = 1;
+    for (const auto& id : id_out) {
+        O << i++ << ") " << id << "\n";
+}
 
     return O;
 }
@@ -536,6 +675,8 @@ bool Circuito::salvar(const std::string& arq) const
     return true;
 }
 
+
+
 /// ***********************
 /// SIMULACAO (funcao principal do circuito)
 /// ***********************
@@ -546,20 +687,69 @@ bool Circuito::salvar(const std::string& arq) const
 // A entrada eh um vetor de bool3S, com dimensao igual ao numero de entradas do circuito.
 // Depois de simular todas as portas do circuito, calcula as saidas do circuito (out_circ)
 // Retorna true se a simulacao foi OK; false caso deh erro
-bool Circuito::simular(const std::vector<bool3S>& in_circ)
+bool Circuito::simular(const std::vector<bool3S>& in_circ)                                                      
 {
     if (!valid() || int(in_circ.size()) != getNumInputs())
     {
-        // Mensagem de erro para debug. Remova na versao final,
+        /*// Mensagem de erro para debug. Remova na versao final,
         // especialmente se estiver utilizando interface com programacao visual
         std::cerr << "ERRO Circuito::simular - circuito (" << getNumInputs()
-            << "entradas) ou vetor de entradas (tamanho " << in_circ.size()
-            << ") invalido" << std::endl;
+        << "entradas) ou vetor de entradas (tamanho " << in_circ.size()<< ") invalido" << std::endl;*/
 
         return false;
     }
 
-    falta_fazer();
+    int Np = getNumPorts() - 1;    // variavel que vai ser apagada logo depois
+    // Inicialização das portas                                                              
+    for (int i = 0; i <= Np; ++i)
+    {
+        ports[i]->setOutput(bool3S::UNDEF);
+    }
+
+
+    bool tudo_def, alguma_def;
+    int id;
+
+    do
+    {
+        tudo_def = true;
+        alguma_def = false;
+
+        for (int i = 0; i <= Np; ++i)                                
+        {
+            if (ports[i]->getOutput() == bool3S::UNDEF)
+            {
+                // Ajusta o tamanho de in_port igual ao num de entradas da porta a ser simulada
+                
+                std:: vector<bool3S>  in_port (ports[i] ->getNumInputs());             
+
+                for (int j = 0; j < ports[i]->getNumInputs(); ++j)
+                {
+                    int id = ports[i]->getId_in(j);
+                    in_port[j] = (id > 0) ? ports[id - 1]->getOutput() : in_circ[-id - 1];
+                    
+                }
+                // Simula a porta
+                ports[i]->simular(in_port);
+                if (ports[i]->getOutput() == bool3S::UNDEF)
+                { tudo_def = false;}
+                else
+                { alguma_def = true;}
+            }
+        }
+
+    } while (!tudo_def && alguma_def);
+
+    //int Ns = getNumOutputs() - 1;   
+    // Determinação das saídas                                            //pode ser feito com < getNumOutputs();
+    for (int j = 0; j <= getNumOutputs() - 1; ++j)
+    {
+        auto id = getIdOutput(j+1);                                                    // tinha que ser só j
+        out_circ[j] = (id > 0) ? ports[id - 1]->getOutput() : in_circ[-id - 1];
+
+   
+    }
+
 
     return true;
 }
