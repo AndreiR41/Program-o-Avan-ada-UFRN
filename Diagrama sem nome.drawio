@@ -131,7 +131,7 @@
         <mxCell id="Dc7wzzg82mR3qbJvhs6L-66" value="Double-&lt;div style=&quot;font-size: 20px;&quot;&gt;Dabble&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=20;" parent="1" vertex="1">
           <mxGeometry x="1359" y="510" width="90" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="qQ6owmYyiTlh0JQ5LR82-1" value="&lt;div style=&quot;font-size: 20px;&quot;&gt;Registrador LOAD&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=20;" parent="1" vertex="1">
+        <mxCell id="qQ6owmYyiTlh0JQ5LR82-1" value="&lt;div style=&quot;font-size: 20px;&quot;&gt;Registrador&amp;nbsp;&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=20;" parent="1" vertex="1">
           <mxGeometry x="295.06" y="470" width="160" height="160" as="geometry" />
         </mxCell>
         <mxCell id="P41b_n4b97m0AwTbKa9I-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontSize=20;" parent="1" source="qQ6owmYyiTlh0JQ5LR82-5" target="qQ6owmYyiTlh0JQ5LR82-1" edge="1">
@@ -337,7 +337,7 @@
         <mxCell id="vhYucIXpQdvtoYfgjH-R-5" value="Registrador Mn" style="rounded=1;whiteSpace=wrap;html=1;fontSize=20;" vertex="1" parent="1">
           <mxGeometry x="1386.88" y="840" width="161" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="vhYucIXpQdvtoYfgjH-R-6" value="Registrador OUT" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=20;" vertex="1" parent="1">
+        <mxCell id="vhYucIXpQdvtoYfgjH-R-6" value="Registrador&amp;nbsp;" style="whiteSpace=wrap;html=1;aspect=fixed;fontSize=20;" vertex="1" parent="1">
           <mxGeometry x="1070" y="400" width="200" height="200" as="geometry" />
         </mxCell>
         <mxCell id="vhYucIXpQdvtoYfgjH-R-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.014;entryY=0.398;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="Dc7wzzg82mR3qbJvhs6L-8" target="vhYucIXpQdvtoYfgjH-R-6">
